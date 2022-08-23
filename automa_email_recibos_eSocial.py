@@ -42,13 +42,14 @@ def escrever_email():
 
     corpo_email = f'''Boa tarde,
 
-Somos da equipe de desenvolvimento do Inmestra.
+Sou da equipe de desenvolvimento do Inmestra, responsável pelos envios ao eSocial.
 
-Estamos entrando em contato para envio dos comprovantes dos eventos do eSocial da {nome_v}.
+Estamos entrando em contato para o envio dos comprovantes dos eventos do eSocial da empresa {nome_v}.
 
 Segue em anexo o arquivo com os números dos recibos.
 
-Qualquer dúvida estamos à disposição através do email suporteesocial@inmestra.com.br!
+Qualquer dúvida estamos à disposição através do email suporteesocial@inmestra.com.br.
+Obrigado!
 '''
 
     # colar o destinatário
@@ -58,7 +59,7 @@ Qualquer dúvida estamos à disposição através do email suporteesocial@inmest
     time.sleep(1)
 
     # colar o assunto
-    clipboard.copy(assunto + f' - {nome_v}')
+    clipboard.copy(assunto)
     pa.hotkey('ctrl', 'v')
     pa.press('tab')
     time.sleep(1)
@@ -74,19 +75,19 @@ Qualquer dúvida estamos à disposição através do email suporteesocial@inmest
     time.sleep(1)
 
     # colar o caminho do arquivo e dar enter
-    clipboard.copy(anexo_v)
+    clipboard.copy(rf'{caminho}\{anexo_v}')
     pa.hotkey('ctrl', 'v')
     time.sleep(0.5)
     pa.press('enter')
-    time.sleep(4)
+    time.sleep(5)
 
     # enviar o email (ctrl + enter)
-    pa.press('esc')
+    pa.hotkey('ctrl', 'enter')
 
 
 criar_lista()
 lista_plan_recibos = pd.read_excel(rf'{caminho}\lista_recibos.xlsx')
-lista_plan_email = pd.read_excel(r'X:\e-Social\dados\codigo_email.xlsx')
+lista_plan_email = pd.read_excel(rf'X:\e-Social\dados\codigo_email.xlsx')
 
 nome = []
 anexo = []
@@ -118,19 +119,14 @@ for codigo in cod:
     email_empresa = email_string[2:fim]
     email.append(email_empresa)
 
-print(len(cod))
-print(len(nome))
-print(len(anexo))
-print(len(email))
-
 dit = {'cod': cod, 'nome': nome, 'anexo': anexo, 'email': email}
 
 dit_df = pd.DataFrame(dit)
 dit_df.to_excel(rf'{caminho}\nomes_empresas.xlsx', index=False)
 
-planilha = pd.read_excel(rf'{caminho}\nomes_empresas.xlsx')
+###### inicio da automação do email ######
 
-# inicio da automação do email
+planilha = pd.read_excel(rf'{caminho}\nomes_empresas.xlsx')
 
 abrir_navegador()
 
@@ -156,4 +152,3 @@ for empresa in planilha['cod']:
     clicar_mensagem()
     time.sleep(1)
     escrever_email()
-    
