@@ -9,7 +9,7 @@ from os.path import isfile
 
 #################################################################################################################
 # Caminho onde ficam as planilhas dos recibos de cada empresa cliente 
-# extraidos com uma outra automação (repositório: , arquivo:) 
+# extraidos com uma outra automação (repositório: VictorAgosta/Coleta_exporta_dados, arquivo: recibos.py) 
 
 caminho = r'X:\e-Social\teste_envio_recibos'
 
